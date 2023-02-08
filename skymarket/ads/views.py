@@ -9,7 +9,6 @@ from ads.permissions import UserPermission
 from rest_framework.permissions import IsAuthenticated
 
 
-
 class AdPagination(pagination.PageNumberPagination):
     page_size = 3
 
@@ -17,7 +16,7 @@ class AdPagination(pagination.PageNumberPagination):
 class AdViewSet(viewsets.ModelViewSet):
     queryset = Ad.objects.all()
     pagination_class = AdPagination
-    #permission_classes = [UserPermission]
+    permission_classes = [UserPermission]
 
     def list(self, request):
         queryset = Ad.objects.all()
