@@ -34,7 +34,6 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
-# TODO здесь тоже нужно подключить Swagger и corsheaders
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -106,9 +105,9 @@ DJOSER = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'NAME': 'skymarket',
+        'USER': 'skymarket',
+        'PASSWORD': 'skymarket',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -180,3 +179,5 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Awesome skymarket project',
     'VERSION': '1.0.0',
 }
+
+AUTH_USER_MODEL = 'users.User'

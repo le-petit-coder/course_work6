@@ -8,7 +8,7 @@ class Ad(models.Model):
     price = models.PositiveIntegerField(null=True)
     description = models.CharField(max_length=2000, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    created_at = models.DateTimeField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='ads/', null=True, blank=True)
 
     class Meta:
@@ -23,4 +23,4 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
-    created_at = models.DateTimeField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
