@@ -8,6 +8,8 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from ads.permissions import UserPermission
 from ads.models import Comment
+from users.models import User
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -63,6 +65,12 @@ class AdViewSet(viewsets.ModelViewSet):
         user = get_object_or_404(queryset, pk=pk)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(methods=['get'], detail=True)
+    def me(self, request, pk=None):
+        queryset = Ad.objects.get(pk=User.objects.get(pk))
+        serializer = AdSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
