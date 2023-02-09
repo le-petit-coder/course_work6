@@ -29,6 +29,7 @@ class AdViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
+        #request.author = request.user #TODO to add current logged in user to author
         serializer = AdSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
