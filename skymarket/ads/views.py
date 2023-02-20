@@ -31,12 +31,13 @@ class AdViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
-        #request.author = request.user #TODO to add current logged in user to author
-        serializer = AdSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if request.user.id == request.data['author']:
+            serializer = AdSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
 
     def retrieve(self, request, pk=None, *args, **kwargs):
         queryset = Ad.objects.all()
@@ -83,11 +84,13 @@ class CommentViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
-        serializer = CommentSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if request.user.id == request.data['author']:
+            serializer = CommentSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response("Unauthorized", status=status.HTTP_401_UNAUTHORIZED)
 
     def retrieve(self, request, pk=None, *args, **kwargs):
         queryset = Comment.objects.all()
